@@ -1,6 +1,6 @@
 #this is the main script. It will call functions from auxiliary scripts and do some basic operations. 
 
-setwd("S:/PRISMAP Studies/PROJECTS/C2 Urinary Signature of Sepsis./2 Code") #please change path to suit your code. 
+setwd(the directory where your codes are saved) #please change path to suit your code. 
 source("setLabels.R")
 source("ModuleAnalysis.R")
 source("DataPreparation.R")
@@ -25,7 +25,7 @@ library(tidyr)
 library(dplyr)
 library(plyr) 
 
-setwd("S:/PRISMAP Studies/PROJECTS/C2 Urinary Signature of Sepsis/")
+setwd(the directory where your Data and Results are saved)
 
 exp_matrix_all <- read.csv("./1 Data/TAC software/Expression matrices/Expression matrix_all_noUTI.csv", header = TRUE, row.names = 1)
 fc_pval_all <- read.csv("./1 Data/TAC software/Fold Change_P Val/Limma_all.csv", header = TRUE, row.names = 1)
@@ -47,7 +47,7 @@ for (i in 1:length(Outcome)){  #Converting 0/1 to Control/Case. This is required
 exp_matrix_known <- exp_matrix_all[rownames(fc_pval_known),]
 
 #Cellular-Deconvolution. All functions here can be found in ModuleAnalysis.R script. 
-iris<-read.csv("S:/PRISMAP Studies/PROJECTS/C2 Urinary Signature of Sepsis/1 Data/IRIS_data.csv", header=TRUE)
+iris<-read.csv("./1 Data/IRIS_data.csv", header=TRUE)
 iris_reduced <- as.data.frame(iris[iris$Cell.Specificity %in% c("Neutrophil", "Dendritic Cell", "B Cell", "T Cell", "NK Cell", "Monocyte"), c("Name", "Cell.Specificity")])
 write.csv(iris_reduced, "./1 Data/iris_genesymbol.csv")
 
