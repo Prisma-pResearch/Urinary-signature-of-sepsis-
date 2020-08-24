@@ -47,8 +47,8 @@ def Boruta_fs(X_train, y_train):
 def RandomForest_fs(X_train, y_train):
     estimator= RandomForestClassifier(n_jobs=1, random_state=0, class_weight='balanced') 
     params = {
-        'n_estimators': [1000], #100 for 2434 genes. 1000 for 1112 genes
-        'min_samples_leaf': [2]  #2 for 2434 probes. 2 for 1112 genes                             
+        'n_estimators': [10, 100, 1000, 10000], #100 for 2434 genes. 1000 for 1112 genes
+        'min_samples_leaf': [1, 2, 3, 4]  #2 for 2434 probes. 2 for 1112 genes                             
     }
     
     CV_rfc = GridSearchCV(estimator, param_grid=params, scoring='roc_auc', cv= 5, verbose = 2, n_jobs = -1)
@@ -82,8 +82,8 @@ def SVC_fs(X_train, y_train):
     selector = RFE(estimator) #define feature selection technique
     params = {
         'step': [1],
-        'n_features_to_select': [200], #200 for 1112 probes
-        'estimator__C': [0.1] #0.1 for 1112 probes                              
+        'n_features_to_select': [50, 100, 200, 300, 400, 500], #200 for 1112 probes
+        'estimator__C': [0.01, 0.1, 1.0, 10, 100] #0.1 for 1112 probes                              
     }
    
     CV_rfc = GridSearchCV(selector, param_grid=params, scoring='roc_auc', cv= 5, verbose = 2, n_jobs= -1)
@@ -120,7 +120,7 @@ def SVC_fs(X_train, y_train):
 def LogisticRegression_Lasso_fs(X_train, y_train):
     estimator = LogisticRegression(penalty = 'l1', class_weight = 'balanced', random_state = 0)
     params = {
-        "C": [100]   #1 for 2,434 probes, 100 for 1112 probes                           
+        "C": [0.01, 0.1, 1.0, 10, 100]   #1 for 2,434 probes, 100 for 1112 probes                           
     }
     
     CV_rfc = GridSearchCV(estimator, param_grid=params, scoring='roc_auc', cv= 5, verbose = 2, n_jobs = -1)
