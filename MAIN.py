@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 
 import os
-os.chdir("S:/PRISMAP Studies/PROJECTS/C2 Urinary Signature of Sepsis/2 Code/Final Python codes")
+os.chdir(the directory where your codes are saved)
 import preprocessing as pp
 import feature_selectors as fs
 import voting as vt
@@ -25,7 +25,7 @@ import voting as vt
 # In[3]:
 
 
-os.chdir("S:/PRISMAP Studies/PROJECTS/C2 Urinary Signature of Sepsis/1 Data")
+os.chdir(the directory where you want to save your results)
 
 
 # In[4]:
