@@ -80,9 +80,9 @@ def RandomForest_fs(x_train, y_train):
 
 
 def SVC_fs(x_train, y_train):
-    estimator= SVC(kernel = "linear", 
-                   probability= True)  #define estimator for feature selection technique
-    selector = RFE(estimator) #define feature selection technique
+    estimator = SVC(kernel = "linear", 
+                    probability= True)  #define estimator for feature selection technique
+    selector = RFE(estimator)  #define feature selection technique
     params = {
         'step': [1],
         'n_features_to_select': [50, 100, 200, 300, 400, 500],  #200 for 1112 probes
@@ -91,13 +91,13 @@ def SVC_fs(x_train, y_train):
     CV_rfc = GridSearchCV(selector, 
                           param_grid=params, 
                           scoring='roc_auc', 
-                          cv= 5, 
+                          cv=5, 
                           verbose=2, 
                           n_jobs=-1)
     CV_rfc.fit(x_train, y_train)
     
-    X_trans_train =  x_train.iloc[:, CV_rfc.best_estimator_.support_]  #slice the data to include only selected features
-    final_gene_list = X_trans_train.columns.values
+    x_trans_train =  x_train.iloc[:, CV_rfc.best_estimator_.support_]  #slice the data to include only selected features
+    final_gene_list = x_trans_train.columns.values
     feature_names = x_train.columns.values 
     df_rank = pd.DataFrame({'Rank': CV_rfc.best_estimator_.ranking_, 
                             'Features': feature_names})
