@@ -6,16 +6,15 @@
 
 import pandas as pd
 import numpy as np
-
 import time
 import random
 import matplotlib.pyplot as plt
-
+import os
 
 # In[2]:
 
 
-import os
+
 os.chdir(the directory where your codes are saved)
 import preprocessing as pp
 import feature_selectors as fs
@@ -45,13 +44,13 @@ limma.head()
 # In[6]:
 
 
-X_train, y_train = pp.SplitX_y(df)
+x_train, y_train = pp.SplitX_y(df)
 
 
 # In[7]:
 
 
-ranked_list_boruta, selected_features_boruta = fs.Boruta_fs(X_train, y_train)
+ranked_list_boruta, selected_features_boruta = fs.Boruta_fs(x_train, y_train)
 #ranked_list_boruta.to_csv("RankData_Boruta_1112probes_default.csv")
 #selected_features_boruta.to_csv("SelectedFeatures_Boruta_default_1112probes.csv")
 
@@ -59,29 +58,32 @@ ranked_list_boruta, selected_features_boruta = fs.Boruta_fs(X_train, y_train)
 # In[9]:
 
 
-ranked_list_RandomForest, selected_features_RandomForest = fs.RandomForest_fs(X_train, y_train)
-#ranked_list_RandomForest.to_csv("RankData_RandomForest_1112probes.csv")
-#selected_features_RandomForest.to_csv("SelectedFeatures_RandomForest_1112probes.csv")
+ranked_list_randomforest, selected_features_randomforest = fs.RandomForest_fs(x_train, y_train)
+#ranked_list_randomforest.to_csv("RankData_RandomForest_1112probes.csv")
+#selected_features_randomforest.to_csv("SelectedFeatures_RandomForest_1112probes.csv")
 
 
 # In[10]:
 
 
-ranked_list_SVC, ranked_list_topfeatures_SVC, selected_features_SVC = fs.SVC_fs(X_train, y_train)
-#ranked_list_SVC.to_csv("RankData_RFEsvm_1112probes.csv") 
-#ranked_list_topfeatures_SVC.to_csv("RankData_topfeatures_RFEsvm_1112probes.csv)
-#selected_features_SVC.to_csv("RankData_RFEsvm_topFeatures_1112probes.csv")
+ranked_list_svc, ranked_list_topfeatures_svc, selected_features_svc = fs.SVC_fs(x_train, y_train)
+#ranked_list_svc.to_csv("RankData_RFEsvm_1112probes.csv") 
+#ranked_list_topfeatures_svc.to_csv("RankData_topfeatures_RFEsvm_1112probes.csv)
+#selected_features_svc.to_csv("RankData_RFEsvm_topFeatures_1112probes.csv")
 
 
 # In[11]:
 
 
-selected_features_LogReg = fs.LogisticRegression_Lasso_fs(X_train, y_train)
-#selected_features_LogReg.to_csv("RankData_Lasso_1112probes.csv") 
+selected_features_logreg = fs.LogisticRegression_Lasso_fs(x_train, y_train)
+#selected_features_logreg.to_csv("RankData_Lasso_1112probes.csv") 
 
 
 # In[ ]:
 
 
-voted_probe_df, inter_probe_df, union_probe_df = vt.voting(selected_features_boruta, )
+voted_probe_df, inter_probe_df, union_probe_df = vt.voting(selected_features_boruta, 
+                                                           selected_features_randomforest, 
+                                                           selected_features_svc, 
+                                                           selected_features_logreg)
 
