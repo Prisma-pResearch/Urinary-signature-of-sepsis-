@@ -21,6 +21,11 @@ import matplotlib.pyplot as plt
 
 
 def Boruta_fs(x_train, y_train):
+    '''Perform feature selection using Boruta
+    
+    Arguments:
+    x_train, y_train
+    '''
     estimator = RandomForestClassifier(n_jobs=-1, 
                                        random_state=0, 
                                        class_weight='balanced')
@@ -45,6 +50,11 @@ def Boruta_fs(x_train, y_train):
 
 
 def RandomForest_fs(x_train, y_train):
+    '''Perform feature selection using Random Forest
+    
+    Arguments:
+    x_train, y_train
+    '''
     estimator= RandomForestClassifier(n_jobs=1, 
                                       random_state=0, 
                                       class_weight='balanced') 
@@ -80,6 +90,11 @@ def RandomForest_fs(x_train, y_train):
 
 
 def SVC_fs(x_train, y_train):
+    '''Perform feature selection using Support Vector Machine
+    
+    Arguments:
+    x_train, y_train
+    '''
     estimator = SVC(kernel = "linear", 
                     probability= True)  #define estimator for feature selection technique
     selector = RFE(estimator)  #define feature selection technique
@@ -118,6 +133,11 @@ def SVC_fs(x_train, y_train):
 
 
 def LogisticRegression_Lasso_fs(x_train, y_train):
+    '''Perform feature selection using Logistic Regression regularized with Lasso
+    
+    Arguments:
+    x_train, y_train
+    '''
     estimator = LogisticRegression(penalty='l1', 
                                    class_weight='balanced', 
                                    random_state=0)
