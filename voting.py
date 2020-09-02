@@ -5,6 +5,7 @@
 
 
 def voting():
+    """Perform majority voting between multiple feature lists"""
     list_boruta = list(boruta.Features)
     list_RFEsvm = list(RFE_svm.Features)
     list_RF = list(RF.Features)
