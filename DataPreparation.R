@@ -1,6 +1,7 @@
 # This script defines functions which prepare the data for multiple downstream analysis including predictive analytics performed in Python. 
 
 convCEL2patID <- function(data){
+  #'Changes column names from CEL file number to a unique patient ID
   pat_id <- array()
   for(i in 1:length(colnames(data))){
     pat_id[i] <- substr(colnames(data)[i], 8, 12)
@@ -24,6 +25,7 @@ convCEL2patID <- function(data){
 
 
 getGenelist <- function(data){
+  #'Get the list of unique genes present in dataset.  
   temp <- strsplit(as.character(data$Gene.Symbol), ";")
   genes_unique <- unique(unlist(temp))
   return(genes_unique)
@@ -31,6 +33,9 @@ getGenelist <- function(data){
 
 
 limmaPrepData <- function(data){
+  #'Prepares a data for LIMMA analysis 
+  #'
+  #'@description This function transposes the dataset, then adds an outcome column 
   limma_genes <- as.data.frame(t(data))
   limma_genes$outcome <- 1  #Patient Label is needed with gene expression value
   limma_genes$outcome[grepl("N", rownames(limma_genes))] = 0
@@ -39,6 +44,9 @@ limmaPrepData <- function(data){
 
 
 format_forIPA <- function(data){
+  #'Prepares a data for Ingenuity Pathway analysis 
+  #'
+  #'@description This function saves gene names as a new column. 
   ipa_data <- data
   symbol <- as.data.frame(rownames(ipa_data))  #Save the Gene Names separately in another dataframe. Dataframe is required for cbind.
   rownames(ipa_data) <- seq(1, nrow(data), 1)
